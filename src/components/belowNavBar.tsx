@@ -6,6 +6,7 @@ import { useState } from "react";
 import UnderLabel from "./underLable";
 import { useAppContext } from "../utils/index";
 import { motion } from "framer-motion";
+import UnderLabelSearch from "./underLabelSearch";
 
 const itemsOptions = [
   {
@@ -103,6 +104,21 @@ const itemsOptions = [
   },
 ];
 
+const categories = [
+  {
+    label: "WOMENSWEAR",
+    href: "/womenswear",
+  },
+  {
+    label: "MENSWEAR",
+    href: "/menswear",
+  },
+  {
+    label: "KIDS",
+    href: "/kids",
+  },
+];
+
 const leagueSpartan = League_Spartan({
   weight: "700",
   subsets: ["latin"],
@@ -115,8 +131,14 @@ const BelowNavbar = () => {
     <div className="w-full h-12 bg-white text-black flex items-center justify-between">
       {!searchActive ? (
         <>
-          {/* Items List */}
-          <div className="pl-2 sm:pl-10 flex items-center relative overflow-x-auto sm:overflow-x-visible scrollbar-hide scroll-smooth">
+          {/* Items List with slide-up animation */}
+          <motion.div
+            className="pl-2 sm:pl-10 flex items-center relative overflow-x-auto sm:overflow-x-visible scrollbar-hide scroll-smooth"
+            initial={{ y: -40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -40, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          >
             <ul
               id="below-navbar-list"
               className="flex gap-1 sm:gap-0 "
@@ -151,7 +173,7 @@ const BelowNavbar = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
           {/* Search Bar */}
           <div>
             <div className="relative pr-10">
@@ -159,15 +181,15 @@ const BelowNavbar = () => {
                 type="text"
                 placeholder="What are you looking for?"
                 className="
-                  py-2
-                  pl-10
-                  pr-4
-                  text-sm
-                  border-b-2
-                  border-black
-                  focus:outline-none
-                  focus:border-black
-                "
+                            py-2
+                            pl-10
+                            pr-4
+                            text-sm
+                            border-b-2
+                            border-black
+                            focus:outline-none
+                            focus:border-black
+                        "
                 onFocus={() =>
                   setSearchActive(searchActive === "true" ? null : "true")
                 }
@@ -179,29 +201,24 @@ const BelowNavbar = () => {
           </div>
         </>
       ) : (
-        <motion.div
-          className="w-full flex items-center justify-between pl-13 pr-13"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 0.2 } }}
-        >
+        <div className="w-full flex items-center justify-between pl-13 pr-13">
           {/* Category Links with slide-down animation */}
-          <motion.div
-            className="flex justify-center gap-8 pb-2"
-            initial={{ y: -40, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -40, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          >
-            <a href="/womenswear" className="text-sm hover:underline">
-              WOMENSWEAR
-            </a>
-            <a href="/menswear" className="text-sm hover:underline">
-              MENSWEAR
-            </a>
-            <a href="/kids" className="text-sm hover:underline">
-              KIDS
-            </a>
+          <motion.div className="flex justify-center gap-8 pb-2">
+            {categories.map((category) => (
+              <div key={category.href} className="flex items-center">
+                <a className="text-sm hover:text-gray-400 cursor-pointer">
+                  {category.label}
+                </a>
+                <div className="absolute  bg-white top-33 left-0 w-screen z-20 p-0 m-0">
+                  <div className="p-10">
+                    <div className="pl-3 text-gray-500">
+                      <h1>Trending</h1>
+                    </div>
+                    <UnderLabelSearch />
+                  </div>
+                </div>
+              </div>
+            ))}
           </motion.div>
           {/* Search Bar with slide-in from left animation */}
           <motion.div
@@ -232,7 +249,6 @@ const BelowNavbar = () => {
               focus:border-black
               w-full
             "
-                onBlur={() => setSearchActive(null)}
               />
               <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none">
                 <FaSearch />
@@ -261,7 +277,7 @@ const BelowNavbar = () => {
               </button>
             </div>
           </motion.div>
-        </motion.div>
+        </div>
       )}
     </div>
   );

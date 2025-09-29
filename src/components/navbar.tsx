@@ -49,7 +49,7 @@ const Navbar = () => {
       {searchActive ? (
         <div className="absolute top-0 left-0 w-full bg-white  z-50">
           {/* Logo */}
-          <div className="flex justify-center items-center pt-8">
+          <div className="flex justify-center items-center pt-8 pl-15">
             <h1
               className={`${leagueSpartan.className} text-2xl sm:text-3xl md:text-4xl uppercase tracking-[.09em] text-black`}
             >
