@@ -179,7 +179,12 @@ const BelowNavbar = () => {
           </div>
         </>
       ) : (
-        <div className="w-full flex items-center justify-between pl-13 pr-13">
+        <motion.div
+          className="w-full flex items-center justify-between pl-13 pr-13"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0, transition: { duration: 0.2 } }}
+        >
           {/* Category Links with slide-down animation */}
           <motion.div
             className="flex justify-center gap-8 pb-2"
@@ -256,7 +261,7 @@ const BelowNavbar = () => {
               </button>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
       )}
     </div>
   );
