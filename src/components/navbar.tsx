@@ -12,10 +12,9 @@ import { useAppContext } from "../utils/index";
 import { motion } from "framer-motion";
 
 const menuOptions = [
-  { label: "Women", href: "/women" },
-  { label: "Men", href: "/men" },
-  { label: "Kids", href: "/kids" },
-  { label: "Home", href: "/home" },
+  { label: "Womenswear", href: "/women" },
+  { label: "Menswear", href: "/men" },
+  { label: "Kidswear", href: "/kids" },
 ];
 
 const leagueSpartan = League_Spartan({
@@ -49,7 +48,7 @@ const Navbar = () => {
       {searchActive ? (
         <div className="absolute top-0 left-0 w-full bg-white  z-50">
           {/* Logo */}
-          <div className="flex justify-center items-center pt-8 pl-15">
+          <div className="flex justify-center items-center pt-8 pl-8">
             <h1
               className={`${leagueSpartan.className} text-2xl sm:text-3xl md:text-4xl uppercase tracking-[.09em] text-black`}
             >

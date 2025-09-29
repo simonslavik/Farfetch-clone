@@ -36,21 +36,21 @@ const helpItems: HelpItem[] = [
 
 const HelpComponent = () => {
   return (
-    <section className="w-full bg-white py-16 px-4 md:px-8 lg:px-16">
-      <div className="max-w-6xl mx-auto">
+    <section className="w-full bg-white py-16">
+      <div className="mx-auto">
         {/* Grid of help items */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {helpItems.map((item) => (
             <div
               key={item.id}
-              className="border border-gray-300 rounded-lg p-8 cursor-pointer transition-all duration-200 hover:shadow-lg hover:border-gray-400"
+              className="border border-gray-300 rounded-lg p-4 cursor-pointer hover:border-gray-400"
             >
               <a href={item.link} className="block">
                 {/* Icon */}
-                <div className="text-black mb-6">{item.icon}</div>
+                <div className="text-black mb-2">{item.icon}</div>
 
                 {/* Title */}
-                <h3 className="text-lg font-semibold text-black mb-3 tracking-wide">
+                <h3 className="text-lg  text-black mb-2 tracking-wide">
                   {item.title}
                 </h3>
 
