@@ -1,5 +1,5 @@
 import React from "react";
-import { Heart } from "lucide-react"; // or any heart icon you prefer
+import ProductCard from "./productCard";
 
 const products = [
   {
@@ -79,29 +79,7 @@ const ProductGrid: React.FC<ProductComponentProps> = ({ component }) => {
       {/* Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8">
         {products.map((item) => (
-          <div key={item.id} className="group">
-            <div className="relative group">
-              <img
-                src={item.image}
-                alt={item.name}
-                className="w-full h-80 object-contain transition-opacity duration-300 group-hover:opacity-0"
-              />
-              <img
-                src={item.imageSecondary}
-                alt={item.name + " secondary"}
-                className="w-full h-80 object-contain absolute inset-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
-              />
-              <button className="absolute top-2 right-2">
-                <Heart className="w-6 h-6 text-gray-600 hover:text-black" />
-              </button>
-            </div>
-            <div className="mt-3">
-              <p className="text-sm text-gray-500">{item.season}</p>
-              <p className="text-sm font-semibold">{item.brand}</p>
-              <p className="text-sm text-gray-700">{item.name}</p>
-              <p className="text-sm mt-1">{item.price}</p>
-            </div>
-          </div>
+          <ProductCard key={item.id} product={item} />
         ))}
       </div>
     </section>

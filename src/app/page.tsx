@@ -6,6 +6,7 @@ import HotCategoriesComponent from "@/components/hotCategoriesComponent";
 import HelpComponent from "@/components/helpComponent";
 import EmailSection from "@/components/emailSection";
 import FooterComponent from "@/components/footerComponent";
+import EventComponent from "@/components/eventComponent";
 
 const productsComponent = [
   {
@@ -23,15 +24,17 @@ const productsComponent = [
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between px-24 pt-24">
-      <Navbar />
-      <HeroSection />
-      <ProductGrid component={productsComponent[0]} />
-      <ProductGrid component={productsComponent[1]} />
-      <HotCategoriesComponent />
-      <HelpComponent />
-      <EmailSection />
+    <div>
+      <main className="flex min-h-screen flex-col items-center justify-between px-24 pt-24">
+        <Navbar />
+        <HeroSection />
+        <ProductGrid component={productsComponent[0]} />
+        <ProductGrid component={productsComponent[1]} />
+        <HotCategoriesComponent />
+        <HelpComponent />
+        <EmailSection />
+      </main>
       <FooterComponent />
-    </main>
+    </div>
   );
 }

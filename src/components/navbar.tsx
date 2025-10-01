@@ -10,11 +10,12 @@ import { useState, useEffect } from "react";
 import BelowNavbar from "./belowNavBar";
 import { useAppContext } from "../utils/index";
 import { motion } from "framer-motion";
+import EventComponent from "./eventComponent";
 
 const menuOptions = [
-  { label: "Womenswear", href: "/women" },
-  { label: "Menswear", href: "/men" },
-  { label: "Kidswear", href: "/kids" },
+  { label: "Womenswear", href: "/women", id: "womenswear" },
+  { label: "Menswear", href: "/men", id: "menswear" },
+  { label: "Kidswear", href: "/kids", id: "kidswear" },
 ];
 
 const leagueSpartan = League_Spartan({
@@ -27,7 +28,8 @@ const Navbar = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const { searchActive, setSearchActive } = useAppContext();
+  const { searchActive, setSearchActive, typeWear, setTypeWear } =
+    useAppContext();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,9 +43,7 @@ const Navbar = () => {
 
   return (
     <div
-      className={`w-full fixed top-0 left-0 z-50 bg-white transition-all duration-200 ${
-        isScrolled ? "border-b border-black" : ""
-      }`}
+      className={`w-full fixed left-0 z-50 bg-white transition-all duration-200 top-0`}
     >
       {searchActive ? (
         <div className="absolute top-0 left-0 w-full bg-white  z-50">
@@ -79,36 +79,49 @@ const Navbar = () => {
                   </button>
                   {showDropdown && (
                     <ul className="absolute left-0 top-full bg-white shadow-md rounded-md w-full">
-                      {menuOptions.map((option, idx) => (
-                        <li key={option.href}>
-                          <button
-                            className={`block text-left w-full text-black text-sm hover:text-gray hover:bg-gray-100 transition-all duration-200 px-3 py-2 rounded-md ${
-                              idx === selectedIndex ? "font-bold" : ""
-                            }`}
-                            onClick={() => {
-                              setSelectedIndex(idx);
-                              setShowDropdown(false);
-                              window.location.href = option.href;
-                            }}
-                          >
-                            {option.label}
-                          </button>
-                        </li>
-                      ))}
+                      {menuOptions.map((option, idx) => {
+                        return (
+                          <li key={option.href}>
+                            <button
+                              className={`block text-left w-full text-black text-sm hover:text-gray hover:bg-gray-100 transition-all duration-200 px-3 py-2 rounded-md ${
+                                option.id === typeWear ? "font-bold" : ""
+                              }`}
+                              onClick={() => {
+                                setSelectedIndex(idx);
+                                setShowDropdown(false);
+                                // Set the typeWear based on selection
+                                setTypeWear(option.id);
+                                window.location.href = option.href;
+                              }}
+                            >
+                              {option.label}
+                            </button>
+                          </li>
+                        );
+                      })}
                     </ul>
                   )}
                 </li>
                 {/* Full screen Menu */}
-                {menuOptions.map((option, idx) => (
-                  <li key={option.href} className="hidden sm:block">
-                    <a
-                      href={option.href}
-                      className="text-black text-sm hover:text-gray hover:bg-gray-100 transition-all duration-200 px-3 py-2 rounded-md"
-                    >
-                      {option.label}
-                    </a>
-                  </li>
-                ))}
+                {menuOptions.map((option, idx) => {
+                  return (
+                    <li key={option.href} className="hidden sm:block">
+                      <a
+                        href={option.href}
+                        className={`text-black text-sm hover:text-gray hover:bg-gray-100 transition-all duration-200 px-3 py-2 rounded-md ${
+                          option.id === typeWear ? "font-bold" : ""
+                        }`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setTypeWear(option.id);
+                          window.location.href = option.href;
+                        }}
+                      >
+                        {option.label}
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
             {/* Logo*/}

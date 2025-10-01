@@ -4,7 +4,7 @@ type Label = {
   labelName: string;
   href: string;
   categories: string[];
-  categoryItems: string[][];
+  categoryItems: [string, string][][];
   color: string;
   image?: string;
 };
@@ -24,12 +24,14 @@ const UnderLabel: React.FC<UnderLabelProps> = ({ label }) => {
             </h4>
             <ul className="space-y-1">
               {label.categoryItems[index].map(
-                (item: string, itemIndex: number) => (
-                  <li
-                    key={itemIndex}
-                    className="text-gray-600 hover:text-black cursor-pointer transition-colors"
-                  >
-                    {item}
+                (item: [string, string], itemIndex: number) => (
+                  <li key={itemIndex}>
+                    <a
+                      href={item[1]}
+                      className="text-gray-600 hover:text-black cursor-pointer transition-colors"
+                    >
+                      {item[0]}
+                    </a>
                   </li>
                 )
               )}

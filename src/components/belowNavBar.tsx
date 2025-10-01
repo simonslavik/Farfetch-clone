@@ -2,20 +2,37 @@
 
 import { FaSearch } from "react-icons/fa";
 import { League_Spartan } from "next/font/google";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import UnderLabel from "./underLable";
 import { useAppContext } from "../utils/index";
 import { motion } from "framer-motion";
 import UnderLabelSearch from "./underLabelSearch";
 
-const itemsOptions = [
+const itemsOptions: Array<{
+  labelName: string;
+  href: string;
+  categories: string[];
+  categoryItems: [string, string][][];
+  color: string;
+  image?: string;
+}> = [
   {
     labelName: "New In",
     href: "/new-in",
     categories: ["WHAT'S NEW", "TRENDING NOW"],
     categoryItems: [
-      ["New in today", "New clothing", "New shoes", "New bags & accessories"],
-      ["Relaxed tailoring", "Chunky boots", "Logo mania", "Neon"],
+      [
+        ["New in today", "/category"],
+        ["New clothing", "/new-clothing"],
+        ["New shoes", "/new-shoes"],
+        ["New bags & accessories", "/new-accessories"],
+      ],
+      [
+        ["Relaxed tailoring", "/relaxed-tailoring"],
+        ["Chunky boots", "/chunky-boots"],
+        ["Logo mania", "/logo-mania"],
+        ["Neon", "/neon"],
+      ],
     ],
     color: "black",
     image: "/welcome-page-image-mw.png",
@@ -25,8 +42,13 @@ const itemsOptions = [
     href: "/brands",
     categories: ["FEATURED BRANDS", "ALL BRANDS"],
     categoryItems: [
-      ["Gucci", "Prada", "Balenciaga", "Saint Laurent"],
-      ["A-Z Brands"],
+      [
+        ["Gucci", "/brands/gucci"],
+        ["Prada", "/brands/prada"],
+        ["Balenciaga", "/brands/balenciaga"],
+        ["Saint Laurent", "/brands/saint-laurent"],
+      ],
+      [["A-Z Brands", "/brands/all"]],
     ],
     color: "black",
     image: "/Screenshot-2023-12-21-at-8.webp",
@@ -36,8 +58,19 @@ const itemsOptions = [
     href: "/clothing",
     categories: ["CLOTHING", "FEATURED"],
     categoryItems: [
-      ["T-Shirts", "Shirts", "Jackets", "Jeans", "Trousers", "Shorts"],
-      ["Essentials", "New Arrivals", "Designer Denim"],
+      [
+        ["T-Shirts", "/clothing/t-shirts"],
+        ["Shirts", "/clothing/shirts"],
+        ["Jackets", "/clothing/jackets"],
+        ["Jeans", "/clothing/jeans"],
+        ["Trousers", "/clothing/trousers"],
+        ["Shorts", "/clothing/shorts"],
+      ],
+      [
+        ["Essentials", "/clothing/essentials"],
+        ["New Arrivals", "/clothing/new"],
+        ["Designer Denim", "/clothing/designer-denim"],
+      ],
     ],
     color: "black",
     image: "/welcome-page-image-ww.png",
@@ -47,8 +80,17 @@ const itemsOptions = [
     href: "/shoes",
     categories: ["SHOES", "FEATURED"],
     categoryItems: [
-      ["Sneakers", "Boots", "Loafers", "Sandals", "Formal Shoes"],
-      ["New Arrivals", "Exclusive Styles"],
+      [
+        ["Sneakers", "/shoes/sneakers"],
+        ["Boots", "/shoes/boots"],
+        ["Loafers", "/shoes/loafers"],
+        ["Sandals", "/shoes/sandals"],
+        ["Formal Shoes", "/shoes/formal"],
+      ],
+      [
+        ["New Arrivals", "/shoes/new"],
+        ["Exclusive Styles", "/shoes/exclusive"],
+      ],
     ],
     color: "black",
   },
@@ -57,8 +99,16 @@ const itemsOptions = [
     href: "/bags",
     categories: ["BAGS", "FEATURED"],
     categoryItems: [
-      ["Tote Bags", "Backpacks", "Crossbody Bags", "Clutches"],
-      ["New Arrivals", "Mini Bags"],
+      [
+        ["Tote Bags", "/bags/tote"],
+        ["Backpacks", "/bags/backpacks"],
+        ["Crossbody Bags", "/bags/crossbody"],
+        ["Clutches", "/bags/clutches"],
+      ],
+      [
+        ["New Arrivals", "/bags/new"],
+        ["Mini Bags", "/bags/mini"],
+      ],
     ],
     color: "black",
   },
@@ -67,8 +117,17 @@ const itemsOptions = [
     href: "/accessories",
     categories: ["ACCESSORIES", "FEATURED"],
     categoryItems: [
-      ["Belts", "Hats", "Sunglasses", "Wallets", "Scarves"],
-      ["New Arrivals", "Statement Pieces"],
+      [
+        ["Belts", "/accessories/belts"],
+        ["Hats", "/accessories/hats"],
+        ["Sunglasses", "/accessories/sunglasses"],
+        ["Wallets", "/accessories/wallets"],
+        ["Scarves", "/accessories/scarves"],
+      ],
+      [
+        ["New Arrivals", "/accessories/new"],
+        ["Statement Pieces", "/accessories/statement"],
+      ],
     ],
     color: "black",
   },
@@ -77,8 +136,15 @@ const itemsOptions = [
     href: "/watches",
     categories: ["WATCHES", "FEATURED"],
     categoryItems: [
-      ["Luxury Watches", "Smart Watches", "Classic Watches"],
-      ["New Arrivals", "Limited Editions"],
+      [
+        ["Luxury Watches", "/watches/luxury"],
+        ["Smart Watches", "/watches/smart"],
+        ["Classic Watches", "/watches/classic"],
+      ],
+      [
+        ["New Arrivals", "/watches/new"],
+        ["Limited Editions", "/watches/limited"],
+      ],
     ],
     color: "black",
   },
@@ -87,8 +153,16 @@ const itemsOptions = [
     href: "/homeware",
     categories: ["HOMEWARE", "FEATURED"],
     categoryItems: [
-      ["Decor", "Kitchenware", "Bedding", "Candles"],
-      ["New Arrivals", "Designer Home"],
+      [
+        ["Decor", "/homeware/decor"],
+        ["Kitchenware", "/homeware/kitchen"],
+        ["Bedding", "/homeware/bedding"],
+        ["Candles", "/homeware/candles"],
+      ],
+      [
+        ["New Arrivals", "/homeware/new"],
+        ["Designer Home", "/homeware/designer"],
+      ],
     ],
     color: "black",
   },
@@ -97,8 +171,16 @@ const itemsOptions = [
     href: "/sale",
     categories: ["SALE", "TOP PICKS"],
     categoryItems: [
-      ["Clothing Sale", "Shoes Sale", "Bags Sale", "Accessories Sale"],
-      ["Best Deals", "Last Chance"],
+      [
+        ["Clothing Sale", "/clothing-sale"],
+        ["Shoes Sale", "/shoes-sale"],
+        ["Bags Sale", "/bags-sale"],
+        ["Accessories Sale", "/accessories-sale"],
+      ],
+      [
+        ["Best Deals", "/best-deals"],
+        ["Last Chance", "/last-chance"],
+      ],
     ],
     color: "red",
   },
@@ -126,6 +208,70 @@ const leagueSpartan = League_Spartan({
 
 const BelowNavbar = () => {
   const { searchActive, setSearchActive } = useAppContext();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // Prevent hydration mismatch by showing a consistent state during SSR
+  if (!isClient) {
+    return (
+      <div className="w-full h-12 bg-white text-black flex items-center justify-between">
+        {/* Default state during SSR - no search active */}
+        <motion.div
+          className="pl-2 sm:pl-10 flex items-center relative overflow-x-auto sm:overflow-x-visible scrollbar-hide scroll-smooth"
+          initial={{ y: -40, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -40, opacity: 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        >
+          <ul
+            id="below-navbar-list"
+            className="flex gap-1 sm:gap-0 "
+            style={{ scrollBehavior: "smooth" }}
+          >
+            {itemsOptions.map((option) => (
+              <li
+                key={option.href}
+                className="inline-block p-3 flex-shrink-0 relative group"
+              >
+                <a
+                  href={option.href}
+                  className={`text-sm hover:text-gray-500 ${
+                    option.color === "red" ? "text-red-500" : "text-black"
+                  }`}
+                >
+                  {option.labelName}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+        <div>
+          <div className="relative pr-10">
+            <input
+              type="text"
+              placeholder="What are you looking for?"
+              className="
+                py-2
+                pl-10
+                pr-4
+                text-sm
+                border-b-2
+                border-black
+                focus:outline-none
+                focus:border-black
+              "
+            />
+            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none">
+              <FaSearch />
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full h-12 bg-white text-black flex items-center justify-between">

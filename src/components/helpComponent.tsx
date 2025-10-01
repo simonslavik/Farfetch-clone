@@ -50,7 +50,7 @@ const HelpComponent = () => {
                 <div className="text-black mb-2">{item.icon}</div>
 
                 {/* Title */}
-                <h3 className="text-lg  text-black mb-2 tracking-wide">
+                <h3 className="text-lg j text-black mb-2 tracking-wide">
                   {item.title}
                 </h3>
 
